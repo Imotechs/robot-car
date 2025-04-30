@@ -28,6 +28,8 @@ This project features a **robot model** designed and developed using **ROS 2**, 
 ## Robot Design
 
 The robot model is based on a design created in **Onshape**, a professional cloud-based CAD tool. The model has been fully constructed and exported to work with ROS, focusing on a **differential drive robot** configuration with precise wheel placements, sensors, and other key mechanical features.
+<img width="953" alt="image" src="https://github.com/user-attachments/assets/239a0292-8f11-4a48-b5b3-6c0024252fcb" />
+<img width="957" alt="image" src="https://github.com/user-attachments/assets/d406c4d0-1de3-43b2-af6d-c102ad7e6beb" />
 
 The robot design includes:
 - **Chassis** with accurate dimensions and geometry
