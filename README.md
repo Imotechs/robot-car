@@ -1,8 +1,8 @@
-/imgs/![alt text](image.png)
+
 
 ![alt text](image-1.png)
 
-![alt text](image-2.png)
+
 
 # Robot URDF and XACRO 
 
@@ -34,7 +34,7 @@ The robot design includes:
 - **Wheels** with properly defined joint configurations
 - **Links** with defined physical properties such as mass, inertia, and geometry
 - **Visual meshes** exported directly from Onshape and converted into appropriate formats for ROS integration
-
+![alt text](image-2.png)
 ## URDF and XACRO Details
 
 The robot's URDF is structured using **XACRO** macros, which help reduce redundancy and increase modularity. The **XACRO** file contains:
