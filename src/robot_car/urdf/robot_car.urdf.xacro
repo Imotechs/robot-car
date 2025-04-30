@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_car">
+
+    <!-- Material definitions -->
+    <material name="grey">
+        <color rgba="0.3 0.5 0.5 1"/>
+    </material>
+
+    <material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <!-- Macro for collision -->
+    <xacro:macro name="add_collision" params="name o_xyz o_rpy">
+        <collision>
+            <origin xyz="${o_xyz}" rpy="${o_rpy}"/>
+            <geometry>
+                <mesh filename="package://robot_car/meshes/${name}.stl" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </xacro:macro>
+
+    <!-- innertialro for collision -->
+
+<xacro:macro name="add_inertial" params="mass ixx ixy ixz iyy iyz izz">
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="${mass}"/>
+    <inertia 
+      ixx="${ixx}" ixy="${ixy}" ixz="${ixz}" 
+      iyy="${iyy}" iyz="${iyz}" izz="${izz}"/>
+  </inertial>
+</xacro:macro>
+
+<xacro:macro name="wheel_inertial" params="mass radius height">
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="${mass}"/>
+    <inertia
+      ixx="${(1/12.0) * mass * (3*radius*radius + height*height)}"
+      ixy="0.0"
+      ixz="0.0"
+      iyy="${0.5 * mass * radius * radius}"
+      iyz="0.0"
+      izz="${(1/12.0) * mass * (3*radius*radius + height*height)}"/>
+  </inertial>
+</xacro:macro>
+
+
+
+    <!-- Base link -->
+    <link name="base_link"/>
+
+    <!-- Caster wheel -->
+    <link name="caster_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://robot_car/meshes/cast.stl" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <xacro:add_collision name="cast" o_xyz="0 0 0" o_rpy="0 0 0"/>
+    
+    <xacro:add_inertial
+  mass="0.00271" 
+  ixx="0.059836" ixy="0" ixz="0" 
+  iyy="0.059846" iyz="0" izz="0.059846"/>
+
+    </link>
+
+    <!-- Car body -->
+    <link name="car_body">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://robot_car/meshes/car_body.stl" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+        <xacro:add_collision name="car_body" o_xyz="0 0 0" o_rpy="0 0 0"/>
+    <xacro:add_inertial
+    mass="0.1033" 
+    ixx="18.650688" ixy="0" ixz="0" 
+    iyy="50.777644" iyz="0" izz="57.031280"/>
+
+    </link>
+
+    <!-- Left wheel -->
+    <link name="left_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://robot_car/meshes/wheel1.stl" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <xacro:add_collision name="wheel1" o_xyz="0 0 0" o_rpy="0 0 0"/>
+      <xacro:wheel_inertial mass="1.0" radius="0.022225" height="0.008636"/>
+
+    </link>
+
+    <!-- Right wheel -->
+    <link name="right_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://robot_car/meshes/wheel1.stl" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <xacro:add_collision name="wheel1" o_xyz="0 0 0" o_rpy="0 0 0"/>
+      <xacro:wheel_inertial mass="1.0" radius="0.022225" height="0.008636"/>
+
+    </link>
+
+    <!-- Joints -->
+    <joint name="base_car_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="car_body"/>
+        <origin xyz="0 0 0.01" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="caster_joint" type="continuous">
+        <parent link="car_body"/>
+        <child link="caster_wheel"/>
+        <origin xyz="-0.35 0 -0.08" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <joint name="left_wheel_car_joint" type="continuous">
+        <parent link="car_body"/>
+        <child link="left_wheel"/>
+        <origin xyz="0.2 -0.225 0.08" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <joint name="right_wheel_car_joint" type="continuous">
+        <parent link="car_body"/>
+        <child link="right_wheel"/>
+        <origin xyz="0.2 0.225 0.15" rpy="3.1416 0 0"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+</robot>

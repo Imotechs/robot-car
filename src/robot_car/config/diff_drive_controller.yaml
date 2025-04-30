@@ -1,0 +1,14 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 50.0
+
+diff_drive_controller:
+  ros__parameters:
+    type: "diff_drive_controller/DiffDriveController"
+    left_wheel_names: ["left_wheel"]
+    right_wheel_names: ["right_wheel"]
+    wheel_separation: 0.5  # distance between wheels (in meters)
+    wheel_radius: 0.1  # radius of the wheels (in meters)
+    command_topic: "/cmd_vel"
+    odom_frame_id: "odom"
+    base_frame_id: "base_link"
